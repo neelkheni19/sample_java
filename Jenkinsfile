@@ -1,27 +1,40 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven3'
+    environment {
+        PYTHON_HOME = "C:\\Python310"
+        PATH = "${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/neelkheni19/sample_java.git'
+                git branch: 'main', url: 'https://github.com/neelkheni19/sample_java.git'
             }
         }
 
-        stage('Build') {
+        stage('Install Dependencies') {
             steps {
-                sh 'mvn compile' // If on Windows: bat 'mvn compile'
+                bat 'pip install --upgrade pip'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test' // If on Windows: bat 'mvn test'
+                bat 'python -m unittest discover -s . -p "test_*.py"'
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished!'
+        }
+        success {
+            echo 'All tests passed!'
+        }
+        failure {
+            echo 'Some tests failed!'
         }
     }
 }
