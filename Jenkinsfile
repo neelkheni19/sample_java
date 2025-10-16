@@ -1,10 +1,11 @@
 pipeline {
     agent any
 
-    environment {
-        PYTHON_HOME = "C:\\Python310"
-        PATH = "${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"
-    }
+   environment {
+    PYTHON_HOME = "C:\\Users\\Neel Kheni\\AppData\\Local\\Microsoft\\WindowsApps"
+    PATH = "${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"
+ }
+
 
     stages {
         stage('Checkout') {
